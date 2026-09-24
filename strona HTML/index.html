@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Northstar — Enterprise Data Engineering &amp; AI Consulting</title>
+  <meta name="description" content="Northstar is a boutique data engineering and AI consulting firm helping enterprises navigate data complexity with precision, strategy, and clarity." />
+
+  <!-- Fonts — thin weights -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind (utility fallback) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23D4AF37'><circle cx='12' cy='12' r='3'/></svg>" />
+</head>
+<body>
+
+  <!-- Stars -->
+  <canvas id="constellation-canvas"></canvas>
+
+  <!-- ============ Nav ============ -->
+  <nav id="navbar" class="nav-bar">
+    <a href="#" class="nav-logo">
+      <span class="star-dot"></span>
+      Northstar
+    </a>
+
+    <button id="nav-toggle" class="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <ul id="nav-menu" class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#philosophy">Philosophy</a></li>
+      <li><a href="#expertise">Expertise</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#contact" class="btn-consultation">Book Consultation</a></li>
+    </ul>
+  </nav>
+
+
+  <!-- ============ Hero ============ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg css-warm"></div>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-stage">
+      <!-- LEFT: Star + Copy -->
+      <div class="hero-left">
+        <div class="north-star-wrap">
+          <div class="north-star"></div>
+        </div>
+
+        <h1>Chart Your Course<br/>Through <em>Data Complexity</em></h1>
+
+        <p class="hero-sub">
+          Enterprise-grade data engineering, cloud architecture,
+          and AI strategy — for organisations that refuse to navigate blind.
+        </p>
+
+        <a href="#contact" class="hero-cta">
+          Begin your voyage <span class="arrow"></span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Scroll -->
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <span class="tick"></span>
+    </div>
+  </section>
+
+
+  <!-- ============ Divider ============ -->
+  <div class="section-divider"></div>
+
+
+  <!-- ============ Philosophy ============ -->
+  <section class="section" id="philosophy">
+    <div class="section-inner">
+
+      <div class="reveal">
+        <span class="section-label"><span class="dash"></span> The Guiding Star</span>
+        <h2 class="section-title">Every Voyage Needs<br/>a Reliable North Star</h2>
+      </div>
+
+      <div class="philosophy-body">
+        <div class="philosophy-text reveal reveal-d1">
+          <p>
+            Modern enterprises navigate an open ocean of data — vast, turbulent,
+            and unforgiving. Without a reliable guiding star, even the most powerful
+            vessels drift. Northstar exists to be that unwavering point of reference:
+            the strategic and technical compass that transforms raw data chaos into
+            clear, actionable intelligence.
+          </p>
+          <p>
+            We don't build dashboards. We architect the deep-water infrastructure
+            that makes every downstream insight possible — fusing the precision of
+            modern data engineering with the strategic foresight of seasoned navigators.
+          </p>
+        </div>
+
+        <div class="philosophy-aside reveal reveal-d2">
+          <blockquote class="philosophy-quote">
+            "Like the ancient mariners who read the stars to chart safe passage,
+            we read your data landscape to chart the optimal course toward
+            measurable, sustainable value."
+          </blockquote>
+          <p>
+            Our systems are not only robust and scalable, but genuinely aligned
+            with your business trajectory — built to endure long after our
+            engagement ends.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ Divider ============ -->
+  <div class="section-divider"></div>
+
+
+  <!-- ============ Services ============ -->
+  <section class="section" id="services">
+    <div class="section-inner">
+
+      <div class="reveal">
+        <span class="section-label"><span class="dash"></span> Navigation Instruments</span>
+        <h2 class="section-title">Precision Instruments for<br/>the Data-Driven Enterprise</h2>
+        <p class="section-desc">
+          Three core disciplines, meticulously honed — each an essential instrument
+          in your organisation's navigation toolkit.
+        </p>
+      </div>
+
+      <div class="services-grid">
+
+        <!-- 1 -->
+        <div class="service-card reveal reveal-d1">
+          <div class="service-card-label">I — The Hull</div>
+          <h3>Data Engineering<br/>&amp; Architecture</h3>
+          <p>
+            The hull of your data vessel — foundational infrastructure,
+            reliable pipelines, and platforms engineered for enterprise-scale durability.
+          </p>
+          <ul>
+            <li>Modern pipeline design &amp; orchestration</li>
+            <li>Data lakehouse &amp; warehouse architecture</li>
+            <li>Real-time streaming &amp; event-driven systems</li>
+            <li>Data quality, lineage &amp; observability</li>
+          </ul>
+        </div>
+
+        <!-- 2 -->
+        <div class="service-card reveal reveal-d2">
+          <div class="service-card-label">II — The Radar</div>
+          <h3>AI &amp; Advanced<br/>Analytics</h3>
+          <p>
+            The ship's radar — seeing what others cannot. Intelligent decision systems
+            and machine learning that turn data into strategic advantage.
+          </p>
+          <ul>
+            <li>ML model development &amp; MLOps</li>
+            <li>Generative AI strategy &amp; LLM integration</li>
+            <li>Predictive analytics &amp; decision intelligence</li>
+            <li>Data science enablement &amp; mentoring</li>
+          </ul>
+        </div>
+
+        <!-- 3 -->
+        <div class="service-card reveal reveal-d3">
+          <div class="service-card-label">III — The Route</div>
+          <h3>Cloud &amp; Data<br/>Strategy</h3>
+          <p>
+            The navigation route itself — strategic roadmaps, cloud optimisation,
+            and scalable governance that keep your enterprise on course.
+          </p>
+          <ul>
+            <li>Cloud assessment &amp; migration</li>
+            <li>Data governance &amp; compliance</li>
+            <li>Cost optimisation &amp; FinOps</li>
+            <li>Enterprise data strategy &amp; roadmapping</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ Divider ============ -->
+  <div class="section-divider"></div>
+
+
+  <!-- ============ Expertise ============ -->
+  <section class="section" id="expertise">
+    <div class="section-inner">
+
+      <div class="reveal">
+        <span class="section-label"><span class="dash"></span> Proven Expertise</span>
+        <h2 class="section-title">Seasoned Navigators,<br/>Not Deck Hands</h2>
+        <p class="section-desc">
+          Built on hands-on technical leadership and deep enterprise consulting
+          experience — earned across industries, at scale.
+        </p>
+      </div>
+
+      <div class="expertise-stats">
+        <div class="stat-item reveal reveal-d1">
+          <div class="stat-number" data-target="15" data-suffix="+">0</div>
+          <div class="stat-label">Years of Experience</div>
+        </div>
+        <div class="stat-item reveal reveal-d2">
+          <div class="stat-number" data-target="50" data-suffix="+">0</div>
+          <div class="stat-label">Enterprise Engagements</div>
+        </div>
+        <div class="stat-item reveal reveal-d3">
+          <div class="stat-number" data-target="12">0</div>
+          <div class="stat-label">Industries Served</div>
+        </div>
+        <div class="stat-item reveal reveal-d4">
+          <div class="stat-number" data-target="100" data-suffix="%">0</div>
+          <div class="stat-label">Client Retention</div>
+        </div>
+      </div>
+
+      <div class="expertise-cards">
+        <div class="expertise-card reveal reveal-d1">
+          <h4>Hands-On Technical Leadership</h4>
+          <p>
+            Every engagement is led by senior architects and engineers who write
+            production code, design systems, and sit shoulder-to-shoulder with
+            your team. No slide decks without substance.
+          </p>
+        </div>
+        <div class="expertise-card reveal reveal-d2">
+          <h4>Unwavering Commitment to Quality</h4>
+          <p>
+            We measure success in the resilience, performance, and long-term
+            maintainability of the systems we build. Our work is designed to
+            outlast our engagement.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============ Divider ============ -->
+  <div class="section-divider"></div>
+
+
+  <!-- ============ Contact ============ -->
+  <section class="section" id="contact">
+    <div class="section-inner">
+
+      <div class="reveal">
+        <span class="section-label"><span class="dash"></span> The Logbook</span>
+        <h2 class="section-title">Log Your Inquiry</h2>
+        <p class="section-desc">
+          Ready to chart a new course? Share the details of your challenge
+          and we'll respond within one business day.
+        </p>
+      </div>
+
+      <div class="contact-layout">
+
+        <div class="contact-info reveal reveal-d1">
+          <p>
+            Whether you're modernising a legacy data estate, launching an AI
+            initiative, or seeking strategic clarity on your cloud architecture —
+            we're here to navigate the complexity with you.
+          </p>
+
+          <div class="contact-meta">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <span>inquiries@northstar.consulting</span>
+          </div>
+          <div class="contact-meta">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>New York · London · Remote</span>
+          </div>
+          <div class="contact-meta">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span>Response within 24 hours</span>
+          </div>
+        </div>
+
+        <form id="contact-form" class="contact-form reveal reveal-d2">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="name" placeholder="Jane Doe" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Work Email</label>
+              <input type="email" id="email" name="email" placeholder="jane@company.com" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="company">Company</label>
+              <input type="text" id="company" name="company" placeholder="Acme Corp" />
+            </div>
+            <div class="form-group">
+              <label for="service">Area of Interest</label>
+              <select id="service" name="service">
+                <option value="" disabled selected>Select a discipline</option>
+                <option value="data-engineering">Data Engineering &amp; Architecture</option>
+                <option value="ai-analytics">AI &amp; Advanced Analytics</option>
+                <option value="cloud-strategy">Cloud &amp; Data Strategy</option>
+                <option value="comprehensive">Comprehensive Assessment</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="message">Project Details</label>
+            <textarea id="message" name="message" placeholder="Describe your challenge, timeline, and desired outcomes…" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Log Entry</button>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ Footer ============ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-left">&copy; 2026 Northstar LLC. All rights reserved.</div>
+      <div class="footer-right">Boutique Data Engineering &amp; AI Consulting · Confidential &amp; Proprietary</div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
