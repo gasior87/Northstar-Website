@@ -328,29 +328,31 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.textContent = 'Transmitting…';
       btn.style.pointerEvents = 'none';
       btn.style.borderColor = 'rgba(212,175,55,0.4)';
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
-      data._subject = `New Inquiry from Northstar Website - ${data.name || 'Visitor'}`;
-      data._template = 'table';
-      data._captcha = 'false';
+      const name = form.querySelector('#name').value;
+      const email = form.querySelector('#email').value;
+      const company = form.querySelector('#company').value;
+      const serviceSelect = form.querySelector('#service');
+      const service = serviceSelect.selectedIndex > 0 ? serviceSelect.options[serviceSelect.selectedIndex].text : '';
+      const message = form.querySelector('#message').value;
+
+      const googleFormData = new FormData();
+      googleFormData.append('emailAddress', email);
+      googleFormData.append('entry.160552575', name);
+      googleFormData.append('entry.1861370323', email);
+      googleFormData.append('entry.770263093', company);
+      googleFormData.append('entry.1788635073', service);
+      googleFormData.append('entry.443471588', message);
 
       try {
-        const response = await fetch('https://formsubmit.co/ajax/contact@northstarllc.dev', {
+        await fetch('https://docs.google.com/forms/d/e/1FAIpQLSeJ67fjlrU0pZfmFS27UBCjjYczEB3bbubdyBpujfRS2IZcvg/formResponse', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify(data)
+          mode: 'no-cors',
+          body: googleFormData
         });
 
-        if (response.ok) {
-          btn.textContent = '✓  Entry Logged';
-          btn.style.borderColor = 'rgba(212,175,55,0.4)';
-          form.reset();
-        } else {
-          throw new Error('Failed');
-        }
+        btn.textContent = '✓  Entry Logged';
+        btn.style.borderColor = 'rgba(212,175,55,0.4)';
+        form.reset();
       } catch (err) {
         btn.textContent = '✕  Transmission Error';
         btn.style.borderColor = 'rgba(239,68,68,0.5)';
