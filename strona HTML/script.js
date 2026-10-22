@@ -321,14 +321,46 @@ document.addEventListener('DOMContentLoaded', () => {
      ------------------------------------------------------- */
   const form = document.getElementById('contact-form');
   if (form) {
-    form.addEventListener('submit', e => {
+    form.addEventListener('submit', async e => {
       e.preventDefault();
       const btn = form.querySelector('.btn-submit');
       const orig = btn.textContent;
-      btn.textContent = '✓  Entry Logged';
+      btn.textContent = 'Transmitting…';
       btn.style.pointerEvents = 'none';
       btn.style.borderColor = 'rgba(212,175,55,0.4)';
-      setTimeout(() => { btn.textContent = orig; btn.style.pointerEvents = ''; btn.style.borderColor = ''; form.reset(); }, 3000);
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      data._subject = `New Inquiry from Northstar Website - ${data.name || 'Visitor'}`;
+      data._template = 'table';
+      data._captcha = 'false';
+
+      try {
+        const response = await fetch('https://formsubmit.co/ajax/contact@northstarllc.dev', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          btn.textContent = '✓  Entry Logged';
+          btn.style.borderColor = 'rgba(212,175,55,0.4)';
+          form.reset();
+        } else {
+          throw new Error('Failed');
+        }
+      } catch (err) {
+        btn.textContent = '✕  Transmission Error';
+        btn.style.borderColor = 'rgba(239,68,68,0.5)';
+      } finally {
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.style.pointerEvents = '';
+          btn.style.borderColor = '';
+        }, 4000);
+      }
     });
   }
 
