@@ -325,6 +325,26 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const btn = form.querySelector('.btn-submit');
       const orig = btn.textContent;
+
+      // 1. Honeypot check: silently drop automated bots
+      const honeypot = form.querySelector('#website_url')?.value;
+      if (honeypot) {
+        btn.textContent = '✓  Entry Logged';
+        form.reset();
+        return;
+      }
+
+      // 2. Turnstile verification check
+      const turnstileToken = form.querySelector('[name="cf-turnstile-response"]')?.value;
+      if (!turnstileToken) {
+        btn.textContent = 'Please complete verification';
+        btn.style.borderColor = 'rgba(239,68,68,0.5)';
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.style.borderColor = '';
+        }, 3000);
+        return;
+      }
       btn.textContent = 'Transmitting…';
       btn.style.pointerEvents = 'none';
       btn.style.borderColor = 'rgba(212,175,55,0.4)';
@@ -335,24 +355,31 @@ document.addEventListener('DOMContentLoaded', () => {
       const service = serviceSelect.selectedIndex > 0 ? serviceSelect.options[serviceSelect.selectedIndex].text : '';
       const message = form.querySelector('#message').value;
 
-      const googleFormData = new FormData();
-      googleFormData.append('emailAddress', email);
-      googleFormData.append('entry.160552575', name);
-      googleFormData.append('entry.1861370323', email);
-      googleFormData.append('entry.770263093', company);
-      googleFormData.append('entry.1788635073', service);
-      googleFormData.append('entry.443471588', message);
+      const payload = new FormData();
+      payload.append('name', name);
+      payload.append('email', email);
+      payload.append('company', company);
+      payload.append('service', service);
+      payload.append('message', message);
+      payload.append('cf-turnstile-response', turnstileToken);
 
       try {
-        await fetch('https://docs.google.com/forms/d/e/1FAIpQLSeJ67fjlrU0pZfmFS27UBCjjYczEB3bbubdyBpujfRS2IZcvg/formResponse', {
+        const res = await fetch('/submit', {
           method: 'POST',
-          mode: 'no-cors',
-          body: googleFormData
+          body: payload
         });
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || 'Submission failed');
+        }
 
         btn.textContent = '✓  Entry Logged';
         btn.style.borderColor = 'rgba(212,175,55,0.4)';
         form.reset();
+        if (window.turnstile) {
+          try { window.turnstile.reset(); } catch (_) {}
+        }
       } catch (err) {
         btn.textContent = '✕  Transmission Error';
         btn.style.borderColor = 'rgba(239,68,68,0.5)';
@@ -363,6 +390,8 @@ document.addEventListener('DOMContentLoaded', () => {
           btn.style.borderColor = '';
         }, 4000);
       }
+
+
     });
   }
 

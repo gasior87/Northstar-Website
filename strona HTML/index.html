@@ -16,6 +16,10 @@
 
   <!-- Custom -->
   <link rel="stylesheet" href="styles.css" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <link rel="preconnect" href="https://challenges.cloudflare.com" />
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23D4AF37'><circle cx='12' cy='12' r='3'/></svg>" />
@@ -298,7 +302,12 @@
           </div>
         </div>
 
-        <form id="contact-form" class="contact-form reveal reveal-d2">
+        <form id="contact-form" class="contact-form reveal reveal-d2" action="/submit" method="POST">
+          <!-- Honeypot anti-spam trap (invisible to users) -->
+          <div class="hp-field" style="display:none !important; visibility:hidden; position:absolute; left:-9999px;" aria-hidden="true">
+            <label for="website_url">Leave this field blank</label>
+            <input type="text" id="website_url" name="website_url" tabindex="-1" autocomplete="off" />
+          </div>
           <div class="form-row">
             <div class="form-group">
               <label for="name">Full Name</label>
@@ -328,6 +337,10 @@
           <div class="form-group">
             <label for="message">Project Details/Question</label>
             <textarea id="message" name="message" placeholder="Describe your challenge, question, timeline, or desired outcomes…" rows="5" required></textarea>
+          </div>
+          <!-- Cloudflare Turnstile CAPTCHA Widget -->
+          <div class="form-group turnstile-wrap" style="margin-bottom: 1.5rem; display: flex; justify-content: center;">
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAAFnmfLNb78fKbgMW" data-theme="dark" data-action="contact"></div>
           </div>
           <button type="submit" class="btn-submit">Log Entry</button>
         </form>
