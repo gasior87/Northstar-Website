@@ -164,59 +164,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Physics for each star in the constellation
         c.stars.forEach(s => {
-          // Find absolute target position for this star
-          let targetX = c.cx + s.tx;
-          let targetY = c.cy + s.ty;
+          // Direct locked position (no violent displacement or bouncing)
+          s.x = c.cx + s.tx;
+          s.y = c.cy + s.ty;
 
-          // Strong spring force to maintain constellation shape
-          s.vx += (targetX - s.x) * 0.08;
-          s.vy += (targetY - s.y) * 0.08;
-
-          // Mouse interaction (repel gently)
+          // Mouse interaction: calculate hover intensity (does NOT violently push stars)
           const dx = s.x - mouse.x;
           const dy = s.y - mouse.y;
           const dist = Math.sqrt(dx*dx + dy*dy);
-          if (dist < MOUSE_R && dist > 0) {
-            const f = (1 - dist / MOUSE_R) * 0.4; // Stronger local push
-            s.vx += (dx / dist) * f;
-            s.vy += (dy / dist) * f;
-            hoverScore += (1 - dist / MOUSE_R); // Detect hover
+          let proximity = 0;
+          if (dist < MOUSE_R) {
+            proximity = (1 - dist / MOUSE_R);
+            hoverScore += proximity;
           }
-
-          s.vx *= 0.82; // High friction so it snaps back
-          s.vy *= 0.82;
-
-          s.x += s.vx;
-          s.y += s.vy;
+          s.hoverProximity = proximity;
 
           if (s.y > maxY) maxY = s.y;
 
           s.phase += s.speed;
           let a = s.baseA + Math.sin(s.phase) * 0.15;
           if(a < 0.05) a = 0.05;
-          s.currentA = a;
+          // Subtly brighten on hover
+          s.currentA = Math.min(1.0, a + proximity * 0.45);
         });
 
-        // Draw explicit constellation edges
-        ctx.lineWidth = 1.0;
+        // Calculate overall constellation hover factor
+        const constelHover = Math.min(1.0, hoverScore * 0.35);
+
+        // Draw constellation edges (lines grow wider & brighter on hover)
+        ctx.lineWidth = 1.0 + constelHover * 1.5;
         c.edges.forEach(edge => {
           let s1 = c.stars[edge[0]];
           let s2 = c.stars[edge[1]];
-          // Line brightness based on star brightness
-          let a = Math.min(s1.currentA, s2.currentA) * 0.9;
+          let avgProx = (s1.hoverProximity + s2.hoverProximity) * 0.5;
+          let a = Math.min(s1.currentA, s2.currentA) * (0.8 + avgProx * 0.6);
           ctx.beginPath();
           ctx.moveTo(s1.x, s1.y);
           ctx.lineTo(s2.x, s2.y);
-          ctx.strokeStyle = `rgba(212,175,55,${a})`;
+          ctx.strokeStyle = gba(212,175,55,${Math.min(1.0, a)});
           ctx.stroke();
         });
 
-        // Draw the stars themselves
+        // Draw the stars themselves (stars gently swell on hover)
         c.stars.forEach(s => {
+          const renderRadius = s.r * (1.0 + s.hoverProximity * 0.65);
           ctx.beginPath();
-          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(212,175,55,${s.currentA})`;
+          ctx.arc(s.x, s.y, renderRadius, 0, Math.PI * 2);
+          ctx.fillStyle = gba(212,175,55,${s.currentA});
           ctx.fill();
+
+          // Subtle glowing halo when hovered
+          if (s.hoverProximity > 0.1) {
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, renderRadius * 2.2, 0, Math.PI * 2);
+            ctx.fillStyle = gba(212,175,55,${s.hoverProximity * 0.15});
+            ctx.fill();
+          }
         });
 
         // Draw constellation name on hover

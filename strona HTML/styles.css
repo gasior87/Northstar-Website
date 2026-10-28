@@ -880,14 +880,14 @@ body {
    ============================================================ */
 .hero-tiles-overlay {
   position: absolute;
-  bottom: 6rem;
+  top: 92px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
   display: flex;
-  gap: 2rem;
+  gap: 1.75rem;
   width: 90%;
-  max-width: 800px;
+  max-width: 760px;
   justify-content: center;
 }
 
@@ -937,8 +937,12 @@ body {
   .hero-tiles-overlay {
     flex-direction: column;
     align-items: center;
-    bottom: 3rem;
-    gap: 1rem;
+    top: 80px;
+    gap: 0.75rem;
+    position: relative;
+    transform: none;
+    left: auto;
+    margin: 0 auto 2rem;
   }
   .hero-tile {
     max-width: 90%;
@@ -954,32 +958,75 @@ body {
    ============================================================ */
 .smb-hero {
   position: relative;
-  min-height: 50vh;
+  min-height: 70vh;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2;
   text-align: center;
-  padding: 8rem 2rem 4rem;
+  overflow: hidden;
+  padding: 9rem 2rem 6rem;
+}
+
+.smb-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('bg-charlotte-night.jpg');
+  background-size: cover;
+  background-position: center bottom;
+  filter: sepia(0.18) saturate(1.15) brightness(0.65) hue-rotate(-5deg);
+  z-index: -2;
+}
+
+.smb-hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(3, 7, 18, 0.45) 0%,
+    rgba(3, 7, 18, 0.25) 50%,
+    rgba(3, 7, 18, 0.95) 100%
+  );
+  mix-blend-mode: normal;
+}
+
+.smb-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(3, 7, 18, 0.3) 0%,
+    rgba(3, 7, 18, 0.8) 100%
+  );
+  z-index: -1;
+}
+
+.smb-hero-content {
+  position: relative;
+  z-index: 3;
+  max-width: 760px;
+  margin: 0 auto;
 }
 
 .smb-hero h1 {
-  font-family: var(--font-serif);
-  font-size: 3rem;
-  font-weight: 400;
-  color: var(--gold);
-  margin-bottom: 1rem;
+  font-family: var(--font-map);
+  font-size: clamp(2.5rem, 5vw, 4.2rem);
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.92);
+  margin-bottom: 1.25rem;
   letter-spacing: 0.02em;
 }
 
 .smb-hero p {
-  font-family: var(--font-sans);
-  font-weight: 300;
-  font-size: 1.1rem;
-  color: var(--text-dim);
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  color: rgba(255, 255, 255, 0.85);
   max-width: 640px;
   margin: 0 auto;
   line-height: 1.8;
+  letter-spacing: 0.02em;
 }
 
 /* Highlighted service cards for SMB */
