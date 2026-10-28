@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SMB Services – Northstar Analytics</title>
+  <link rel="preconnect" href="https://challenges.cloudflare.com" />
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Header / Navigation -->
+  <header class="site-header">
+    <nav class="nav">
+      <a href="index.html" class="logo">Northstar Analytics</a>
+      <ul class="nav-links">
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="index.html#philosophy">Philosophy</a></li>
+        <li><a href="SMB.html">SMB</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero for SMB page -->
+  <section class="hero-small">
+    <div class="container">
+      <h1>SMB Solutions</h1>
+      <p>Data‑driven, cost‑effective IT and analytics consulting for small‑ and medium‑businesses in the Charlotte area.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <!-- Highlighted services – larger cards -->
+    <section class="services-highlight">
+      <div class="service-card">
+        <h2>Data Analysis & Reporting</h2>
+        <p>We turn raw data into actionable insights. From interactive dashboards to automated KPI reports, our solutions empower SMBs to make data‑backed decisions without the overhead of enterprise‑grade tools.</p>
+      </div>
+      <div class="service-card">
+        <h2>Business‑Tool Development</h2>
+        <p>Custom web apps, internal utilities, and workflow‑automation platforms built to fit the unique processes of your business. We deliver lightweight, maintainable solutions that scale as you grow.</p>
+      </div>
+      <div class="service-card">
+        <h2>AI‑Based Process Automation</h2>
+        <p>Leverage machine‑learning models and intelligent bots to automate repetitive tasks—email triage, data entry, reporting, and more—saving time and reducing errors.</p>
+      </div>
+    </section>
+
+    <!-- Additional services – concise list -->
+    <section class="services-list">
+      <h3>Other Services We Offer</h3>
+      <ul>
+        <li>Marketing campaign planning & execution</li>
+        <li>Content management & social‑media strategy</li>
+        <li>Promotional material design (brochures, flyers, video intros)</li>
+        <li>Website maintenance & local SEO optimisation</li>
+        <li>Database design, migration, and optimisation</li>
+        <li>General IT consulting (software selection, workflow improvement)</li>
+        <li>Cloud migration & cost‑optimisation advice</li>
+      </ul>
+    </section>
+
+    <!-- Contact form – same as on main site -->
+    <section id="contact" class="contact-section">
+      <h2>Get In Touch</h2>
+      <form id="contact-form" action="/submit" method="POST">
+        <input type="text" name="name" placeholder="Name" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <textarea name="message" placeholder="How can we help you?" required></textarea>
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAFnmfLNb78fKbgMW"></div>
+        <button type="submit">Send</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 Northstar Analytics LLC – All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

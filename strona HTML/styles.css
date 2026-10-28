@@ -873,3 +873,32 @@ body {
   .section { padding: 5rem 1.25rem; }
   .contact-form { padding: 1.5rem; }
 }
+
+/* --------------------------------------------------------------
+   Tile styles – used on the landing page split
+   -------------------------------------------------------------- */
+.tile {
+  display: block;
+  width: 48%;
+  max-width: 500px;
+  min-height: 260px;
+  margin: 1rem auto;
+  background: var(--bg-deep);
+  border: 1px solid var(--border-glass);
+  border-radius: 1rem;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  text-decoration: none;
+  color: inherit;
+  transition: transform .3s, box-shadow .3s;
+}
+.tile:hover { transform: translateY(-4px); box-shadow: 0 8px 35px rgba(0,0,0,0.6); }
+
+.tile-content { padding: 2rem; text-align: center; }
+.tile-title { font-family: var(--font-serif); font-size: 2rem; color: var(--gold); margin-bottom: .5rem; }
+.tile-sub   { font-family: var(--font-sans); color: var(--text-dim); }
+
+.tile-enterprise { background-image: url('img/enterprise-bg.jpg'); background-size: cover; }
+.tile-smb       { background-image: url('img/smb-bg.jpg'); background-size: cover; }
+
+.split-wrapper { display: flex; flex-wrap: wrap; justify-content: space-around; }
