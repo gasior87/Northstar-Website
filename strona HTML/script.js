@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
           ctx.beginPath();
           ctx.moveTo(s1.x, s1.y);
           ctx.lineTo(s2.x, s2.y);
-          ctx.strokeStyle = gba(212,175,55,${Math.min(1.0, a)});
+          ctx.strokeStyle = `rgba(212,175,55,${Math.min(1.0, a)})`;
           ctx.stroke();
         });
 
@@ -210,14 +210,14 @@ document.addEventListener('DOMContentLoaded', () => {
           const renderRadius = s.r * (1.0 + s.hoverProximity * 0.65);
           ctx.beginPath();
           ctx.arc(s.x, s.y, renderRadius, 0, Math.PI * 2);
-          ctx.fillStyle = gba(212,175,55,${s.currentA});
+          ctx.fillStyle = `rgba(212,175,55,${s.currentA})`;
           ctx.fill();
 
           // Subtle glowing halo when hovered
           if (s.hoverProximity > 0.1) {
             ctx.beginPath();
             ctx.arc(s.x, s.y, renderRadius * 2.2, 0, Math.PI * 2);
-            ctx.fillStyle = gba(212,175,55,${s.hoverProximity * 0.15});
+            ctx.fillStyle = `rgba(212,175,55,${s.hoverProximity * 0.15})`;
             ctx.fill();
           }
         });
