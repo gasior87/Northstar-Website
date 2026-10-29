@@ -320,10 +320,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* -------------------------------------------------------
-     7. Contact Form Feedback
+     7. Contact Form (status message under the button)
      ------------------------------------------------------- */
   const form = document.getElementById('contact-form');
   if (form) {
+    const status = form.querySelector('.form-status');
+    const setStatus = (msg, kind) => {
+      if (!status) return;
+      status.textContent = msg;
+      status.className = 'form-status' + (kind ? ' ' + kind : '');
+    };
+    const OK_MSG = "Message sent. We’ll reply within one business day.";
+    const ERR_MSG = "Something went wrong. Please email us at contact@northstarllc.dev.";
+
     form.addEventListener('submit', async e => {
       e.preventDefault();
       const btn = form.querySelector('.btn-submit');
@@ -332,7 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // 1. Honeypot check: silently drop automated bots
       const honeypot = form.querySelector('#website_url')?.value;
       if (honeypot) {
-        btn.textContent = '✓  Entry Logged';
+        setStatus(OK_MSG, 'ok');
         form.reset();
         return;
       }
@@ -340,62 +349,87 @@ document.addEventListener('DOMContentLoaded', () => {
       // 2. Turnstile verification check
       const turnstileToken = form.querySelector('[name="cf-turnstile-response"]')?.value;
       if (!turnstileToken) {
-        btn.textContent = 'Please complete verification';
-        btn.style.borderColor = 'rgba(239,68,68,0.5)';
-        setTimeout(() => {
-          btn.textContent = orig;
-          btn.style.borderColor = '';
-        }, 3000);
+        setStatus('Please complete the verification above, then send again.', 'err');
         return;
       }
-      btn.textContent = 'Transmitting…';
-      btn.style.pointerEvents = 'none';
-      btn.style.borderColor = 'rgba(212,175,55,0.4)';
-      const name = form.querySelector('#name').value;
-      const email = form.querySelector('#email').value;
-      const company = form.querySelector('#company').value;
-      const serviceSelect = form.querySelector('#service');
-      const service = serviceSelect.selectedIndex > 0 ? serviceSelect.options[serviceSelect.selectedIndex].text : '';
-      const message = form.querySelector('#message').value;
 
+      btn.textContent = 'Sending…';
+      btn.style.pointerEvents = 'none';
+      setStatus('', '');
+
+      const serviceSelect = form.querySelector('#service');
       const payload = new FormData();
-      payload.append('name', name);
-      payload.append('email', email);
-      payload.append('company', company);
-      payload.append('service', service);
-      payload.append('message', message);
+      payload.append('name', form.querySelector('#name').value);
+      payload.append('email', form.querySelector('#email').value);
+      payload.append('company', form.querySelector('#company').value);
+      payload.append('service', serviceSelect.selectedIndex > 0 ? serviceSelect.options[serviceSelect.selectedIndex].text : '');
+      payload.append('message', form.querySelector('#message').value);
       payload.append('cf-turnstile-response', turnstileToken);
 
       try {
-        const res = await fetch('/submit', {
-          method: 'POST',
-          body: payload
-        });
-
-        if (!res.ok) {
-          const errData = await res.json().catch(() => ({}));
-          throw new Error(errData.error || 'Submission failed');
-        }
-
-        btn.textContent = '✓  Entry Logged';
-        btn.style.borderColor = 'rgba(212,175,55,0.4)';
+        const res = await fetch('/submit', { method: 'POST', body: payload });
+        if (!res.ok) throw new Error('Submission failed');
+        setStatus(OK_MSG, 'ok');
         form.reset();
         if (window.turnstile) {
           try { window.turnstile.reset(); } catch (_) {}
         }
       } catch (err) {
-        btn.textContent = '✕  Transmission Error';
-        btn.style.borderColor = 'rgba(239,68,68,0.5)';
+        setStatus(ERR_MSG, 'err');
       } finally {
-        setTimeout(() => {
-          btn.textContent = orig;
-          btn.style.pointerEvents = '';
-          btn.style.borderColor = '';
-        }, 4000);
+        btn.textContent = orig;
+        btn.style.pointerEvents = '';
       }
-
-
     });
+  }
+
+
+  /* -------------------------------------------------------
+     8. Privacy Policy pop-up (opens from any [data-privacy] link)
+     ------------------------------------------------------- */
+  const privacyLinks = document.querySelectorAll('[data-privacy]');
+  if (privacyLinks.length && typeof HTMLDialogElement === 'function') {
+    const dlg = document.createElement('dialog');
+    dlg.className = 'privacy-dialog';
+    dlg.setAttribute('aria-labelledby', 'privacy-title');
+    dlg.innerHTML = `
+      <div class="privacy-inner">
+        <button type="button" class="privacy-close" aria-label="Close">&times;</button>
+        <h2 id="privacy-title">Privacy Policy</h2>
+        <p class="privacy-date">Last updated: October 28, 2026</p>
+
+        <h3>Who we are</h3>
+        <p>Northstar Analytics LLC (“Northstar”, “we”) provides data, analytics and AI consulting. You can reach us at contact@northstarllc.dev.</p>
+
+        <h3>What we collect</h3>
+        <p>When you use our contact form, we collect what you enter: your name, email address, company, area of interest and message. Our spam protection (Cloudflare Turnstile) also processes technical data, such as your IP address and browser details, to confirm that you are a person.</p>
+
+        <h3>How we use it</h3>
+        <p>Only to respond to your inquiry and to discuss possible work together. We do not sell your information or use it for advertising.</p>
+
+        <h3>Where it is stored</h3>
+        <p>Form submissions are stored in a private Google Forms and Google Sheets account controlled by Northstar. This website is hosted by Cloudflare.</p>
+
+        <h3>Analytics and cookies</h3>
+        <p>We use Cloudflare Web Analytics to see aggregate visit counts. It does not use cookies or follow individuals across sites. Our pages load fonts from Google Fonts, so your browser contacts Google’s servers to download them.</p>
+
+        <h3>How long we keep it</h3>
+        <p>We keep inquiries for as long as needed to respond to you and to maintain our business records.</p>
+
+        <h3>Your choices</h3>
+        <p>You can ask us to access, correct or delete your information at any time by emailing contact@northstarllc.dev.</p>
+
+        <h3>Changes</h3>
+        <p>We may update this policy. The date above shows the latest version.</p>
+      </div>`;
+    document.body.appendChild(dlg);
+
+    privacyLinks.forEach(link => link.addEventListener('click', e => {
+      e.preventDefault();
+      dlg.showModal();
+    }));
+    dlg.querySelector('.privacy-close').addEventListener('click', () => dlg.close());
+    dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
   }
 
 });

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://northstarllc.dev/sitemap.xml
