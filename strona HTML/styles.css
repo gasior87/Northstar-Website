@@ -1147,3 +1147,40 @@ body {
   color: #fff;
   transform: translateY(-1px);
 }
+
+/* ============================================================
+   Layout tweaks: contact form beside heading + tighter sections
+   ============================================================ */
+
+/* --- Sections: spacing reduced by 50% --- */
+.section { padding: 4.5rem 3rem; }
+.smb-services-highlight { padding: 2rem 0; }
+.smb-services-extra { padding: 1rem 0 2rem; }
+
+@media (max-width: 768px) {
+  .section { padding: 3rem 1.5rem; }
+}
+@media (max-width: 480px) {
+  .section { padding: 2.5rem 1.25rem; }
+}
+
+/* --- Contact: heading + info on the left, form on the right, same top line --- */
+#contact .section-inner {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  column-gap: 5rem;
+  align-items: start;
+}
+
+/* lets the info block and the form join the grid directly */
+#contact .contact-layout { display: contents; }
+
+#contact .section-inner > .reveal { grid-column: 1; grid-row: 1; }
+#contact .contact-info { grid-column: 1; grid-row: 2; margin-top: 2rem; }
+#contact .contact-form { grid-column: 2; grid-row: 1 / span 2; }
+
+@media (max-width: 1024px) {
+  #contact .section-inner { display: block; }
+  #contact .contact-info { margin-top: 2rem; }
+  #contact .contact-form { margin-top: 3rem; }
+}
